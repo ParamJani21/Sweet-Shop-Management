@@ -9,6 +9,9 @@ function DashboardCards({ onSelect }) {
       <div className="dashboard-card" onClick={() => onSelect('view')}>
         <h2>View Sweets</h2>
       </div>
+      <div className="dashboard-card" onClick={() => onSelect('manage')}>
+        <h2>Purchase/Restock Sweet</h2>
+      </div>
     </div>
   );
 }

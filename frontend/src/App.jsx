@@ -3,11 +3,12 @@ import './App.css';
 import DashboardCards from './components/DashboardCards';
 import AddSweetForm from './components/AddSweetForm';
 import SweetsTable from './components/SweetsTable';
+import PurchaseRestock from './components/PurchaseRestock';
 
 const API_URL = 'http://localhost:3001';
 
 function App() {
-  const [view, setView] = useState(null); // null, 'add', 'view'
+  const [view, setView] = useState(null); // null, 'add', 'view', 'manage'
   const [addForm, setAddForm] = useState({ name: '', category: '', price: '', quantity: '' });
   const [addError, setAddError] = useState('');
   const [addSuccess, setAddSuccess] = useState('');
@@ -20,8 +21,13 @@ function App() {
   const [filters, setFilters] = useState({ name: '', category: '', minPrice: '', maxPrice: '' });
   const [filteredSweets, setFilteredSweets] = useState([]);
 
+  // Purchase/Restock state
+  const [prLoading, setPrLoading] = useState(false);
+  const [prError, setPrError] = useState('');
+  const [prSuccess, setPrSuccess] = useState('');
+
   useEffect(() => {
-    if (view === 'view') {
+    if (view === 'view' || view === 'manage') {
       fetchSweets();
     }
     // eslint-disable-next-line
@@ -90,15 +96,19 @@ function App() {
     setAddError('');
     setAddSuccess('');
     try {
+      // Generate a unique numeric ID
+      const newId = Date.now();
+      const sweetToAdd = {
+        id: newId,
+        name: addForm.name.trim(),
+        category: addForm.category.trim(),
+        price: Number(addForm.price),
+        quantity: Number(addForm.quantity)
+      };
       const res = await fetch(`${API_URL}/sweets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: addForm.name.trim(),
-          category: addForm.category.trim(),
-          price: Number(addForm.price),
-          quantity: Number(addForm.quantity)
-        })
+        body: JSON.stringify(sweetToAdd)
       });
       if (!res.ok) throw new Error('Failed to add sweet');
       setAddSuccess('Sweet added successfully!');
@@ -118,40 +128,78 @@ function App() {
     setFilters({ name: '', category: '', minPrice: '', maxPrice: '' });
   };
 
+  // Handle purchase/restock submit
+  const handlePurchaseRestock = async ({ id, action, quantity }) => {
+    console.log('handlePurchaseRestock called with:', id, typeof id, action, quantity);
+    setPrLoading(true);
+    setPrError('');
+    setPrSuccess('');
+    try {
+      const res = await fetch(`${API_URL}/sweets/${id}/${action}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Operation failed');
+      setPrSuccess(data.message || 'Success!');
+      fetchSweets(); // Refresh sweets list
+    } catch (err) {
+      setPrError(err.message);
+    }
+    setPrLoading(false);
+  };
+
   return (
     <div className="dashboard-gradient-bg">
-      <div className="dashboard-center">
-        {!view && (
-          <DashboardCards onSelect={setView} />
-        )}
-        {view === 'add' && (
-          <div className="dashboard-content">
-            <button onClick={() => setView(null)}>Back</button>
-            <h2>Add Sweet</h2>
-            <AddSweetForm
-              form={addForm}
-              onInput={handleAddInput}
-              onSubmit={handleAddSubmit}
-              loading={addLoading}
-              error={addError}
-              success={addSuccess}
-            />
-          </div>
-        )}
-        {view === 'view' && (
-          <div className="dashboard-content">
-            <button onClick={() => setView(null)}>Back</button>
-            <h2>All Sweets</h2>
-            <SweetsTable
-              sweets={filteredSweets}
-              loading={loading}
-              error={error}
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              onResetFilters={handleResetFilters}
-            />
-          </div>
-        )}
+      <div className="dashboard-wrapper">
+        <div className="dashboard-header">Sweet Shop Management</div>
+        <div className="dashboard-center">
+          {!view && (
+            <DashboardCards onSelect={setView} />
+          )}
+          {view === 'add' && (
+            <div className="dashboard-content">
+              <button onClick={() => setView(null)}>Back</button>
+              <h2>Add Sweet</h2>
+              <AddSweetForm
+                form={addForm}
+                onInput={handleAddInput}
+                onSubmit={handleAddSubmit}
+                loading={addLoading}
+                error={addError}
+                success={addSuccess}
+              />
+            </div>
+          )}
+          {view === 'view' && (
+            <div className="dashboard-content">
+              <button onClick={() => setView(null)}>Back</button>
+              <h2>All Sweets</h2>
+              <SweetsTable
+                sweets={filteredSweets}
+                loading={loading}
+                error={error}
+                filters={filters}
+                onFilterChange={handleFilterChange}
+                onResetFilters={handleResetFilters}
+              />
+            </div>
+          )}
+          {view === 'manage' && (
+            <div className="dashboard-content">
+              <button onClick={() => setView(null)}>Back</button>
+              <h2>Purchase/Restock Sweet</h2>
+              <PurchaseRestock
+                sweets={sweets}
+                onSubmit={handlePurchaseRestock}
+                loading={prLoading}
+                error={prError}
+                success={prSuccess}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

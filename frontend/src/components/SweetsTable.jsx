@@ -31,7 +31,7 @@ function SweetsTable({ sweets, loading, error, filters, onFilterChange, onResetF
                 <tr><td colSpan="5">No sweets found.</td></tr>
               ) : (
                 sweets.map(sweet => (
-                  <tr key={sweet.id}>
+                  <tr key={sweet.id || sweet.name}>
                     <td>{sweet.id}</td>
                     <td>{sweet.name}</td>
                     <td>{sweet.category}</td>
