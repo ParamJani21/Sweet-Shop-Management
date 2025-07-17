@@ -1,0 +1,282 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #111;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  color: inherit;
+}
+
+.dashboard-gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f8ffae, #43c6ac, #6a82fb, #fc5c7d, #f8ffae);
+  background-size: 400% 400%;
+  animation: gradientBG 18s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 0;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.dashboard-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 2rem;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem 3rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  min-width: 200px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-card h2, .dashboard-card * {
+  color: #111 !important;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(67,198,172,0.18);
+}
+
+.dashboard-content {
+  background: rgba(255,255,255,0.95);
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem 3rem;
+  margin-top: 2rem;
+  min-width: 350px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dashboard-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.sweets-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sweets-controls input {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #bbb;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  background: #fff;
+  color: #111;
+}
+
+.sweets-controls button {
+  background: #43c6ac;
+  color: #111;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sweets-controls button:hover {
+  background: #34a98c;
+}
+
+.sweets-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #f9f9f9;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(67,198,172,0.08);
+}
+
+.sweets-table th, .sweets-table td {
+  padding: 0.8rem 1.2rem;
+  text-align: left;
+}
+
+.sweets-table th {
+  background: #e0f7ef;
+  font-weight: 700;
+  color: #222;
+}
+
+.sweets-table tr:not(:last-child) td {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sweets-table tr:hover td {
+  background: #e8fdf6;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+
+.dashboard-content button:not([type="submit"]) {
+  margin-bottom: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.dashboard-content button:not([type="submit"]):hover {
+  background: #f8ffae;
+  color: #222;
+}
+
+.add-sweet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 350px;
+}
+
+.add-sweet-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.add-sweet-form input {
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #bbb;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  background: #fff;
+  color: #111;
+}
+
+.add-sweet-form button[type="submit"] {
+  margin-top: 0.8rem;
+  padding: 0.6rem 1.2rem;
+  background: #43c6ac;
+  color: #111;
+  border: none;
+  border-radius: 0.4rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-sweet-form button[type="submit"]:hover {
+  background: #34a98c;
+}
+
+.form-error {
+  color: #c0392b;
+  margin-top: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.form-success {
+  color: #27ae60;
+  margin-top: 0.5rem;
+  font-size: 0.98rem;
+}
