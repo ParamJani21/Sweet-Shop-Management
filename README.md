@@ -14,8 +14,6 @@ A full-stack web application for managing a sweet shop, featuring a modern React
 - Responsive and accessible design
 - Modular, developer-friendly codebase
 
-## Screenshots
-> (Add screenshots here if desired)
 
 ## Getting Started
 
@@ -71,8 +69,3 @@ A full-stack web application for managing a sweet shop, featuring a modern React
 - If you get CORS errors, ensure both frontend and backend are running locally.
 - For scroll issues, the UI is now fully responsive and scrollable.
 
-## Contributing
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-MIT
